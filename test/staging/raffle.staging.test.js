@@ -24,7 +24,8 @@ developmentChains.includes(network.name)
                   await new Promise(async (resolve, reject) => {
                       // setup listener before we enter the raffle
                       // Just in case the blockchain moves REALLY fast
-                      raffle.once("WinnerPicked", async () => {
+
+                      raffle.once("ListOfWinner", async () => {
                           console.log("WinnerPicked event fired!")
                           try {
                               // add our asserts here
@@ -47,14 +48,14 @@ developmentChains.includes(network.name)
                               reject(error)
                           }
                       })
-                      // Then entering the raffle
+                      //   Then entering the raffle
                       console.log("Entering Raffle...")
                       const tx = await raffle.enterRaffle({ value: raffleEntranceFee })
                       await tx.wait(1)
                       console.log("Ok, time to wait...")
                       const winnerStartingBalance = await accounts[0].getBalance()
 
-                      // and this code WONT complete until our listener has finished listening!
+                      //   and this code WONT complete until our listener has finished listening!
                   })
               })
           })
